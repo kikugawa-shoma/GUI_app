@@ -4,7 +4,6 @@
 
 """
 
-from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import codecs
@@ -21,9 +20,7 @@ driver.get(urlName)
 
 html = driver.page_source.encode("utf-8")
 
-soup = BeautifulSoup(html,"html.parser")
-
-f = codecs.open(r"C:\Users\ktmks\programming\GUI_app\Data\html.html","w","utf-8")
+f = codecs.open(r"C:\Users\ktmks\programming\GUI_app\Data\pokemapi.html","w","utf-8")
 f.write(html.decode('utf-8'))
 f.close()
 
