@@ -25,9 +25,6 @@ for i in range(len(cprs_data)):
     pl, r = map(float,cprs_data[i].split("\t"))
     cprs[pl] = r
 
-
-
-
 if __name__ == "__main__":
-    kairyu = pokemon("カイリュー",15,15,15,35.5)
+    kairyu = pokemon("エーフィ",13,14,15,36)
     print(kairyu.CP())
