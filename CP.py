@@ -12,10 +12,26 @@ class pokemon():
         self.Aiv = Aiv
         self.Div = Div
         self.Hiv = Hiv
+
     def CP(self):
         #!!self.cprはCP補正値
         self.cpr = cprs[self.PL]
         return int((self.A+self.Aiv)*(self.D+self.Div)**0.5*(self.H+self.Hiv)**0.5*self.cpr/10)
+
+    def super_CP(self):
+        for pl in cprs.keys():
+            next_cp = int((self.A+self.Aiv)*(self.D+self.Div)**0.5*(self.H+self.Hiv)**0.5*cprs[pl]/10)
+            if pl == 1 and next_cp > 1500:
+                return -1
+            elif pl == 40:
+                return next_cp
+            elif next_cp > 1500:
+                return pre_cp
+            else:
+                pre_cp = next_cp
+
+
+        
 
 df = pd.read_pickle(r"C:\Users\ktmks\programming\GUI_app\Data\race_values.pkl")
 with open(r"C:\Users\ktmks\programming\GUI_app\Data\cpr.txt") as f:

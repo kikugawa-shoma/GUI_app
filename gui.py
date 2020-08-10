@@ -3,10 +3,15 @@ import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 
-def result_set(*args):
-    if poke_name.get() != "":
-        res.set(CP.pokemon(poke_name.get(),Aiv.get(),Div.get(),Hiv.get(),pl.get()).CP())
-    else:pass
+def result_set():
+    res.set(CP.pokemon(poke_name.get(),Aiv.get(),Div.get(),Hiv.get(),pl.get()).CP())
+
+def super_set():
+    super_res.set(CP.pokemon(poke_name.get(),Aiv.get(),Div.get(),Hiv.get(),pl.get()).super_CP())
+
+def display_update(*args):
+    result_set()
+    super_set()
 
 
 df = pd.read_pickle(r"C:\Users\ktmks\programming\GUI_app\Data\race_values.pkl")
@@ -15,7 +20,7 @@ poke_names.sort()
 
 root = tk.Tk()
 root.title("CP計算ツール")
-root.geometry("400x300")
+root.geometry("450x350")
 mainframe = ttk.Frame(root,padding="20",relief="solid")
 mainframe.grid(column=0,row=0,sticky=("N","W","E","S"))
 root.columnconfigure(0,weight=1)
@@ -26,6 +31,7 @@ Aiv = tk.IntVar(value=15)
 Div = tk.IntVar(value=15)
 Hiv = tk.IntVar(value=15)
 res = tk.IntVar()
+super_res = tk.IntVar()
 pl = tk.DoubleVar(value=40)
 ivs = [i for i in range(15,-1,-1)]
 
@@ -36,28 +42,28 @@ Pokename_entry = ttk.Combobox(mainframe,
                               width        = 15,
                               )
 Pokename_entry.grid(column=3,row=0)
-Pokename_entry.bind("<<ComboboxSelected>>",result_set)
+Pokename_entry.bind("<<ComboboxSelected>>",display_update)
 
 Aiv_entry = ttk.Combobox(mainframe,
                          width        = 4,
                          values       = ivs,
                          textvariable = Aiv)
 Aiv_entry.grid(column=2,row=2)
-Aiv_entry.bind("<<ComboboxSelected>>",result_set)
+Aiv_entry.bind("<<ComboboxSelected>>",display_update)
 
 Div_entry = ttk.Combobox(mainframe,
                          width        = 4,
                          values       = ivs,
                          textvariable = Div)
 Div_entry.grid(column=3,row=2)
-Div_entry.bind("<<ComboboxSelected>>",result_set)
+Div_entry.bind("<<ComboboxSelected>>",display_update)
 
 Hiv_entry = ttk.Combobox(mainframe,
                          width        = 4,
                          values       = ivs,
                          textvariable = Hiv)
 Hiv_entry.grid(column=4,row=2)
-Hiv_entry.bind("<<ComboboxSelected>>",result_set)
+Hiv_entry.bind("<<ComboboxSelected>>",display_update)
 
 
 
@@ -82,11 +88,17 @@ ttk.Label(mainframe,text="CPは").grid(column=1,row=5)
 ttk.Label(mainframe,textvariable=res).grid(column=2,row=5)
 ttk.Label(mainframe,text="です").grid(column=3,row=5)
 
+ttk.Label(mainframe,text="スーパーリーグMax").grid(column=1,row=6)
+ttk.Label(mainframe,textvariable=super_res).grid(column=2,row=6)
+
 for child in mainframe.winfo_children():
     child.grid_configure(padx=10,pady=10)
 
 Pokename_entry.focus()
 root.bind("<Return>",result_set)
+
+result_set()
+super_set()
 
 
 root.mainloop()
