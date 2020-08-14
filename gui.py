@@ -81,7 +81,7 @@ tk.Scale(mainframe,
          from_=1,to=40,
          resolution=0.5,
          length=250,
-         command=result_set,
+         command=display_update,
          ).grid(column=2,columnspan=3,row=3)
 
 ttk.Label(mainframe,text="CPは").grid(column=1,row=5)
