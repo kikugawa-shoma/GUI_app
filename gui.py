@@ -1,17 +1,21 @@
-import CP
-import tkinter as tk
 from tkinter import ttk
+import tkinter as tk
 import pandas as pd
+import CP
 
 def result_set():
-    res.set(CP.pokemon(poke_name.get(),Aiv.get(),Div.get(),Hiv.get(),pl.get()).CP())
+    res.set(CP.pokemon(poke_name.get(),Aiv.get(),Div.get(),Hiv.get()).CP(pl.get()))
 
 def super_set():
-    super_res.set(CP.pokemon(poke_name.get(),Aiv.get(),Div.get(),Hiv.get(),pl.get()).super_CP())
+    super_res.set(CP.pokemon(poke_name.get(),Aiv.get(),Div.get(),Hiv.get()).reague_CP(1500))
+
+def hyper_set():
+    hyper_res.set(CP.pokemon(poke_name.get(),Aiv.get(),Div.get(),Hiv.get()).reague_CP(2500))
 
 def display_update(*args):
     result_set()
     super_set()
+    hyper_set()
 
 
 df = pd.read_pickle(r"C:\Users\ktmks\programming\GUI_app\Data\race_values.pkl")
@@ -32,6 +36,7 @@ Div = tk.IntVar(value=15)
 Hiv = tk.IntVar(value=15)
 res = tk.IntVar()
 super_res = tk.IntVar()
+hyper_res = tk.IntVar()
 pl = tk.DoubleVar(value=40)
 ivs = [i for i in range(15,-1,-1)]
 
@@ -91,15 +96,16 @@ ttk.Label(mainframe,text="です").grid(column=3,row=5)
 ttk.Label(mainframe,text="スーパーリーグMax").grid(column=1,row=6)
 ttk.Label(mainframe,textvariable=super_res).grid(column=2,row=6)
 
+ttk.Label(mainframe,text="ハイパーリーグMax").grid(column=1,row=7)
+ttk.Label(mainframe,textvariable=hyper_res).grid(column=2,row=7)
+
 for child in mainframe.winfo_children():
     child.grid_configure(padx=10,pady=10)
 
 Pokename_entry.focus()
-root.bind("<Return>",result_set)
+root.bind("<Return>",display_update)
 
-result_set()
-super_set()
-
+display_update()
 
 root.mainloop()
 
